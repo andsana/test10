@@ -1,7 +1,7 @@
 import { AppDispatch } from '../../app/store';
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import axiosApi from '../../components/axiosApi';
 import { Post, PostMutation } from '../../types';
+import axiosApi from '../../axiosApi';
 
 export const createPost = createAsyncThunk<void, PostMutation>(
   'posts/create',
