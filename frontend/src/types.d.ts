@@ -3,7 +3,7 @@ export interface Post {
   title: string;
   content: string;
   image: string | null;
-  datetime: string;
+  dateTime: string;
 }
 
 export interface PostMutation {

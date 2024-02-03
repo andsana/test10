@@ -20,11 +20,12 @@ const Home = () => {
   if (!postsLoading && posts) {
     postsArea = posts.map(post => (
       <PostItem
+          id={post.id}
         key={post.id}
         title={post.title}
         content={post.content}
         image={post.image}
-        datetime={post.datetime}
+        dateTime={post.dateTime}
       />
     ));
   }

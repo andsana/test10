@@ -1,10 +1,8 @@
 import Layout from './components/Layout/Layout';
-import { Route, Routes } from 'react-router-dom';
+import {Route, Routes} from 'react-router-dom';
 import Home from './containers/Home/Home';
-
-function NewPost() {
-  return null;
-}
+import NewPost from "./containers/NewPost/NewPost";
+import SinglePost from "./containers/SinglePost/SinglePost";
 
 function App() {
 
@@ -13,9 +11,10 @@ function App() {
       <Routes>
         <Route path="/" element={<Home/>}/>
         <Route path="/new-post" element={<NewPost/>}/>
+          <Route path="/posts/:id" element={<SinglePost />}/>
       </Routes>
     </Layout>
   )
 }
 
-export default App
+export default App;

@@ -4,23 +4,32 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d4ee1f38-0934-4f46-8bc3-0e4323239dfd" name="Changes" comment="Create Redux async thunks and Slice for fetching, creating, deleting for posts.">
-      <change afterPath="$PROJECT_DIR$/frontend/src/axiosApi.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/src/components/AppToolbar/AppToolbar.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/src/components/FileInput/FileInput.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/src/components/Layout/Layout.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/src/components/PostForm/PostForm.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/src/components/PostItem/PosItem.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/src/constants.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/src/containers/Home/Home.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/src/containers/NewPost/NewPost.tsx" afterDir="false" />
+    <list default="true" id="d4ee1f38-0934-4f46-8bc3-0e4323239dfd" name="Changes" comment="add SinglePost.tsx">
+      <change afterPath="$PROJECT_DIR$/.editorconfig" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/api/config.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/api/db.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/api/fileDb.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/api/index.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/api/multer.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/api/nodemon.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/api/public/images/43207dae-276a-41d6-b20e-465b9f755e95.jpeg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/api/public/images/7c527904-385a-4526-b5f5-c0b2925a9b79.jpeg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/api/routers/posts.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/api/tsconfig.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/api/types.d.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/assets/images/no-image-available.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/containers/SinglePost/SinglePost.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/api/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/api/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/api/package.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/package-lock.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/package.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/src/App.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/App.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/components/axiosApi.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/main.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/main.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/store/posts/postsThunks.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/store/posts/postsThunks.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/PostForm/PostForm.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/PostForm/PostForm.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/PostItem/PosItem.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/PostItem/PosItem.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/containers/Home/Home.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/containers/Home/Home.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/types.d.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/types.d.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -47,7 +56,7 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "WebServerToolWindowFactoryState": "false",
     "git-widget-placeholder": "main",
-    "last_opened_file_path": "/home/sana/Projects/test10/frontend/src/components",
+    "last_opened_file_path": "/home/sana/Projects/React/test9",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -59,10 +68,14 @@
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/frontend/src/assets" />
+      <recent name="$PROJECT_DIR$/api" />
+      <recent name="$PROJECT_DIR$/api/routers" />
+      <recent name="$PROJECT_DIR$" />
       <recent name="$PROJECT_DIR$/frontend/src/components" />
-      <recent name="$PROJECT_DIR$/frontend/src" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/api" />
       <recent name="$PROJECT_DIR$/frontend/src/components" />
       <recent name="$PROJECT_DIR$" />
     </key>
@@ -77,7 +90,8 @@
       <updated>1706942082547</updated>
       <workItem from="1706942083582" duration="61000" />
       <workItem from="1706946776668" duration="2856000" />
-      <workItem from="1706949634618" duration="3544000" />
+      <workItem from="1706949634618" duration="6415000" />
+      <workItem from="1706956056407" duration="11437000" />
     </task>
     <task id="LOCAL-00001" summary="Create Redux async thunks and Slice for fetching, creating, deleting for posts.">
       <option name="closed" value="true" />
@@ -87,15 +101,56 @@
       <option name="project" value="LOCAL" />
       <updated>1706948487032</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="Add containers: Home.tsx, NewPost.tsx.">
+      <option name="closed" value="true" />
+      <created>1706953448358</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1706953448358</updated>
+    </task>
+    <task id="LOCAL-00003" summary="Add containers: Home.tsx, NewPost.tsx.">
+      <option name="closed" value="true" />
+      <created>1706956096897</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1706956096897</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
   </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State>
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="origin/main" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Create Redux async thunks and Slice for fetching, creating, deleting for posts." />
-    <option name="LAST_COMMIT_MESSAGE" value="Create Redux async thunks and Slice for fetching, creating, deleting for posts." />
+    <MESSAGE value="Add containers: Home.tsx, NewPost.tsx." />
+    <MESSAGE value="add SinglePost.tsx" />
+    <option name="LAST_COMMIT_MESSAGE" value="add SinglePost.tsx" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

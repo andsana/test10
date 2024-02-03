@@ -1,7 +1,7 @@
-import {PostMutation} from '../../types';
-import React, {useState} from 'react';
-import {Grid, TextField} from '@mui/material';
-import {LoadingButton} from '@mui/lab';
+import { PostMutation } from '../../types';
+import React, { useState } from 'react';
+import { Grid, TextField } from '@mui/material';
+import { LoadingButton } from '@mui/lab';
 import SaveIcon from '@mui/icons-material/Save';
 import FileInput from '../FileInput/FileInput';
 
@@ -40,9 +40,7 @@ const PostForm: React.FC<Props> = ({onSubmit, isLoading = false}) => {
   const onFormSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (isLoading) return;
-    onSubmit({
-      ...post
-    });
+    onSubmit(post);
   };
 
   return (
@@ -50,6 +48,7 @@ const PostForm: React.FC<Props> = ({onSubmit, isLoading = false}) => {
       <Grid container direction="column" spacing={2}>
         <Grid item xs>
           <TextField
+            required
             id="title" label="Title"
             name="title"
             value={post.title}
@@ -59,8 +58,8 @@ const PostForm: React.FC<Props> = ({onSubmit, isLoading = false}) => {
         <Grid item xs>
           <TextField
             required
-            id="post" label="Post"
-            name="post"
+            id="content" label="Content"
+            name="content"
             value={post.content}
             onChange={changePost}
           />
@@ -69,7 +68,7 @@ const PostForm: React.FC<Props> = ({onSubmit, isLoading = false}) => {
           <FileInput
             onChange={fileInputChangeHandler}
             name="image"
-            label="Product image"
+            label="Image"
           />
         </Grid>
         <Grid item xs>
