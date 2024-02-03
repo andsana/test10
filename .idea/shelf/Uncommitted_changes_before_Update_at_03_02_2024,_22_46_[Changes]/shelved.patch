@@ -1,0 +1,287 @@
+Index: frontend/src/components/PostItem/PosItem.tsx
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>import React from 'react';\nimport {Card, CardActions, CardContent, CardHeader, CardMedia, Grid, IconButton, styled} from '@mui/material';\nimport {apiURL} from '../../constants';\nimport imageNotAvailable from '../../assets/images/no-image-available.png';\nimport {Link} from \"react-router-dom\";\nimport ArrowForwardIcon from '@mui/icons-material/ArrowForward';\nimport {useAppDispatch, useAppSelector} from \"../../app/hook\";\nimport {selectPosts} from \"../../store/posts/postsSlise\";\nimport DeleteIcon from '@mui/icons-material/Delete';\nimport {deletePost} from \"../../store/posts/postsThunks\";\n\n\nconst ImageCardMedia = styled(CardMedia)({\n  height: 0,\n  paddingTop: '56.25%',\n});\n\ninterface Props {\n  id: string;\n  title: string;\n  content: string;\n  image: string | null;\n  dateTime: string;\n}\n\nconst PostItem: React.FC<Props> = ({id, title, content, image, dateTime}) => {\n\n  const dispatch = useAppDispatch();\n  const posts = useAppSelector(selectPosts);\n  const post = posts.find(p => p.id === id);\n  // const deletePostLoading = useAppSelector(selectDeletePostLoading);\n\n  let cardImage = imageNotAvailable as string;\n\n  const formattedDateTime = new Date(dateTime).toLocaleString();\n\n  if (image) {\n    cardImage = apiURL + '/' + image;\n  }\n\n  return (\n    <Grid item xs={12} sm={12} md={6} lg={4}>\n      <Card sx={{height: '100%'}}>\n        <CardHeader title={title}/>\n        <ImageCardMedia\n          image={cardImage}\n          title={title}\n        />\n        <CardContent>\n          <strong>\n            {content}\n          </strong>\n          <p>{formattedDateTime}</p>\n        </CardContent>\n        <CardActions>\n          <IconButton component={Link} to={`/posts/${id}`}>\n            <ArrowForwardIcon />\n          </IconButton>\n          <IconButton onClick={() => post && dispatch(deletePost(post.id))}>\n            <DeleteIcon />\n          </IconButton>\n        </CardActions>\n      </Card>\n    </Grid>\n  );\n};\n\nexport default PostItem;
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/frontend/src/components/PostItem/PosItem.tsx b/frontend/src/components/PostItem/PosItem.tsx
+--- a/frontend/src/components/PostItem/PosItem.tsx	(revision c9a14557d94296d32620f769bce58cd57eeb1631)
++++ b/frontend/src/components/PostItem/PosItem.tsx	(date 1706967927468)
+@@ -1,14 +1,6 @@
+ import React from 'react';
+-import {Card, CardActions, CardContent, CardHeader, CardMedia, Grid, IconButton, styled} from '@mui/material';
+-import {apiURL} from '../../constants';
+-import imageNotAvailable from '../../assets/images/no-image-available.png';
+-import {Link} from "react-router-dom";
+-import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
+-import {useAppDispatch, useAppSelector} from "../../app/hook";
+-import {selectPosts} from "../../store/posts/postsSlise";
+-import DeleteIcon from '@mui/icons-material/Delete';
+-import {deletePost} from "../../store/posts/postsThunks";
+-
++import { Card, CardContent, CardHeader, CardMedia, Grid, styled } from '@mui/material';
++import { apiURL } from '../../constants';
+ 
+ const ImageCardMedia = styled(CardMedia)({
+   height: 0,
+@@ -16,27 +8,14 @@
+ });
+ 
+ interface Props {
+-  id: string;
+   title: string;
+   content: string;
+   image: string | null;
+-  dateTime: string;
++  datetime: string;
+ }
+ 
+-const PostItem: React.FC<Props> = ({id, title, content, image, dateTime}) => {
+-
+-  const dispatch = useAppDispatch();
+-  const posts = useAppSelector(selectPosts);
+-  const post = posts.find(p => p.id === id);
+-  // const deletePostLoading = useAppSelector(selectDeletePostLoading);
+-
+-  let cardImage = imageNotAvailable as string;
+-
+-  const formattedDateTime = new Date(dateTime).toLocaleString();
+-
+-  if (image) {
+-    cardImage = apiURL + '/' + image;
+-  }
++const PostItem: React.FC<Props> = ({title, content, image, datetime}) => {
++  const cardImage = apiURL + '/' + image;
+ 
+   return (
+     <Grid item xs={12} sm={12} md={6} lg={4}>
+@@ -50,16 +29,8 @@
+           <strong>
+             {content}
+           </strong>
+-          <p>{formattedDateTime}</p>
++          <p>{datetime}</p>
+         </CardContent>
+-        <CardActions>
+-          <IconButton component={Link} to={`/posts/${id}`}>
+-            <ArrowForwardIcon />
+-          </IconButton>
+-          <IconButton onClick={() => post && dispatch(deletePost(post.id))}>
+-            <DeleteIcon />
+-          </IconButton>
+-        </CardActions>
+       </Card>
+     </Grid>
+   );
+Index: frontend/src/components/PostForm/PostForm.tsx
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>import { PostMutation } from '../../types';\nimport React, { useState } from 'react';\nimport { Grid, TextField } from '@mui/material';\nimport { LoadingButton } from '@mui/lab';\nimport SaveIcon from '@mui/icons-material/Save';\nimport FileInput from '../FileInput/FileInput';\n\nconst initialState: PostMutation = {\n  title: '',\n  content: '',\n  image: null,\n};\n\ninterface Props {\n  onSubmit: (post: PostMutation) => void;\n  isLoading?: boolean;\n}\n\nconst PostForm: React.FC<Props> = ({onSubmit, isLoading = false}) => {\n  const [post, setPost] = useState(initialState);\n\n  const changePost = (e: React.ChangeEvent<HTMLInputElement>) => {\n    const {name, value} = e.target;\n    setPost((prevState) => ({\n      ...prevState,\n      [name]: value,\n    }));\n  };\n\n  const fileInputChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {\n    const {name, files} = e.target;\n    if (files) {\n      setPost(prevState => ({\n        ...prevState,\n        [name]: files[0],\n      }));\n    }\n  };\n\n  const onFormSubmit = (e: React.FormEvent) => {\n    e.preventDefault();\n    if (isLoading) return;\n    onSubmit(post);\n  };\n\n  return (\n    <form onSubmit={onFormSubmit} style={{maxWidth: '400px'}}>\n      <Grid container direction=\"column\" spacing={2}>\n        <Grid item xs>\n          <TextField\n            required\n            id=\"title\" label=\"Title\"\n            name=\"title\"\n            value={post.title}\n            onChange={changePost}\n          />\n        </Grid>\n        <Grid item xs>\n          <TextField\n            required\n            id=\"content\" label=\"Content\"\n            name=\"content\"\n            value={post.content}\n            onChange={changePost}\n          />\n        </Grid>\n        <Grid item xs>\n          <FileInput\n            onChange={fileInputChangeHandler}\n            name=\"image\"\n            label=\"Image\"\n          />\n        </Grid>\n        <Grid item xs>\n          <LoadingButton\n            type=\"submit\"\n            color=\"primary\"\n            variant=\"contained\"\n            disabled={isLoading}\n            loading={isLoading}\n            loadingPosition=\"start\"\n            startIcon={<SaveIcon/>}\n          >\n            Create\n          </LoadingButton>\n        </Grid>\n      </Grid>\n    </form>\n  );\n};\n\nexport default PostForm;
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/frontend/src/components/PostForm/PostForm.tsx b/frontend/src/components/PostForm/PostForm.tsx
+--- a/frontend/src/components/PostForm/PostForm.tsx	(revision c9a14557d94296d32620f769bce58cd57eeb1631)
++++ b/frontend/src/components/PostForm/PostForm.tsx	(date 1706967928036)
+@@ -1,7 +1,7 @@
+-import { PostMutation } from '../../types';
+-import React, { useState } from 'react';
+-import { Grid, TextField } from '@mui/material';
+-import { LoadingButton } from '@mui/lab';
++import {PostMutation} from '../../types';
++import React, {useState} from 'react';
++import {Grid, TextField} from '@mui/material';
++import {LoadingButton} from '@mui/lab';
+ import SaveIcon from '@mui/icons-material/Save';
+ import FileInput from '../FileInput/FileInput';
+ 
+@@ -40,7 +40,9 @@
+   const onFormSubmit = (e: React.FormEvent) => {
+     e.preventDefault();
+     if (isLoading) return;
+-    onSubmit(post);
++    onSubmit({
++      ...post
++    });
+   };
+ 
+   return (
+@@ -48,7 +50,6 @@
+       <Grid container direction="column" spacing={2}>
+         <Grid item xs>
+           <TextField
+-            required
+             id="title" label="Title"
+             name="title"
+             value={post.title}
+@@ -58,8 +59,8 @@
+         <Grid item xs>
+           <TextField
+             required
+-            id="content" label="Content"
+-            name="content"
++            id="post" label="Post"
++            name="post"
+             value={post.content}
+             onChange={changePost}
+           />
+@@ -68,7 +69,7 @@
+           <FileInput
+             onChange={fileInputChangeHandler}
+             name="image"
+-            label="Image"
++            label="Product image"
+           />
+         </Grid>
+         <Grid item xs>
+Index: .idea/workspace.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<project version=\"4\">\n  <component name=\"AutoImportSettings\">\n    <option name=\"autoReloadType\" value=\"SELECTIVE\" />\n  </component>\n  <component name=\"ChangeListManager\">\n    <list default=\"true\" id=\"d4ee1f38-0934-4f46-8bc3-0e4323239dfd\" name=\"Changes\" comment=\"add SinglePost.tsx\">\n      <change afterPath=\"$PROJECT_DIR$/.editorconfig\" afterDir=\"false\" />\n      <change afterPath=\"$PROJECT_DIR$/api/config.ts\" afterDir=\"false\" />\n      <change afterPath=\"$PROJECT_DIR$/api/db.json\" afterDir=\"false\" />\n      <change afterPath=\"$PROJECT_DIR$/api/fileDb.ts\" afterDir=\"false\" />\n      <change afterPath=\"$PROJECT_DIR$/api/index.ts\" afterDir=\"false\" />\n      <change afterPath=\"$PROJECT_DIR$/api/multer.ts\" afterDir=\"false\" />\n      <change afterPath=\"$PROJECT_DIR$/api/nodemon.json\" afterDir=\"false\" />\n      <change afterPath=\"$PROJECT_DIR$/api/public/images/43207dae-276a-41d6-b20e-465b9f755e95.jpeg\" afterDir=\"false\" />\n      <change afterPath=\"$PROJECT_DIR$/api/public/images/7c527904-385a-4526-b5f5-c0b2925a9b79.jpeg\" afterDir=\"false\" />\n      <change afterPath=\"$PROJECT_DIR$/api/routers/posts.ts\" afterDir=\"false\" />\n      <change afterPath=\"$PROJECT_DIR$/api/tsconfig.json\" afterDir=\"false\" />\n      <change afterPath=\"$PROJECT_DIR$/api/types.d.ts\" afterDir=\"false\" />\n      <change afterPath=\"$PROJECT_DIR$/frontend/src/assets/images/no-image-available.png\" afterDir=\"false\" />\n      <change afterPath=\"$PROJECT_DIR$/frontend/src/containers/SinglePost/SinglePost.tsx\" afterDir=\"false\" />\n      <change beforePath=\"$PROJECT_DIR$/.idea/workspace.xml\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/.idea/workspace.xml\" afterDir=\"false\" />\n      <change beforePath=\"$PROJECT_DIR$/api/.gitignore\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/api/.gitignore\" afterDir=\"false\" />\n      <change beforePath=\"$PROJECT_DIR$/api/package-lock.json\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/api/package-lock.json\" afterDir=\"false\" />\n      <change beforePath=\"$PROJECT_DIR$/api/package.json\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/api/package.json\" afterDir=\"false\" />\n      <change beforePath=\"$PROJECT_DIR$/frontend/package-lock.json\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/frontend/package-lock.json\" afterDir=\"false\" />\n      <change beforePath=\"$PROJECT_DIR$/frontend/package.json\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/frontend/package.json\" afterDir=\"false\" />\n      <change beforePath=\"$PROJECT_DIR$/frontend/src/App.tsx\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/frontend/src/App.tsx\" afterDir=\"false\" />\n      <change beforePath=\"$PROJECT_DIR$/frontend/src/components/PostForm/PostForm.tsx\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/frontend/src/components/PostForm/PostForm.tsx\" afterDir=\"false\" />\n      <change beforePath=\"$PROJECT_DIR$/frontend/src/components/PostItem/PosItem.tsx\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/frontend/src/components/PostItem/PosItem.tsx\" afterDir=\"false\" />\n      <change beforePath=\"$PROJECT_DIR$/frontend/src/containers/Home/Home.tsx\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/frontend/src/containers/Home/Home.tsx\" afterDir=\"false\" />\n      <change beforePath=\"$PROJECT_DIR$/frontend/src/types.d.ts\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/frontend/src/types.d.ts\" afterDir=\"false\" />\n    </list>\n    <option name=\"SHOW_DIALOG\" value=\"false\" />\n    <option name=\"HIGHLIGHT_CONFLICTS\" value=\"true\" />\n    <option name=\"HIGHLIGHT_NON_ACTIVE_CHANGELIST\" value=\"false\" />\n    <option name=\"LAST_RESOLUTION\" value=\"IGNORE\" />\n  </component>\n  <component name=\"Git.Settings\">\n    <option name=\"RECENT_GIT_ROOT_PATH\" value=\"$PROJECT_DIR$\" />\n  </component>\n  <component name=\"MarkdownSettingsMigration\">\n    <option name=\"stateVersion\" value=\"1\" />\n  </component>\n  <component name=\"ProjectColorInfo\">{\n  &quot;associatedIndex&quot;: 2\n}</component>\n  <component name=\"ProjectId\" id=\"2bqUPys6P9Jauj3NVHfQjN2GISG\" />\n  <component name=\"ProjectViewState\">\n    <option name=\"hideEmptyMiddlePackages\" value=\"true\" />\n    <option name=\"showLibraryContents\" value=\"true\" />\n  </component>\n  <component name=\"PropertiesComponent\"><![CDATA[{\n  \"keyToString\": {\n    \"RunOnceActivity.OpenProjectViewOnStart\": \"true\",\n    \"RunOnceActivity.ShowReadmeOnStart\": \"true\",\n    \"WebServerToolWindowFactoryState\": \"false\",\n    \"git-widget-placeholder\": \"main\",\n    \"last_opened_file_path\": \"/home/sana/Projects/React/test9\",\n    \"node.js.detected.package.eslint\": \"true\",\n    \"node.js.detected.package.tslint\": \"true\",\n    \"node.js.selected.package.eslint\": \"(autodetect)\",\n    \"node.js.selected.package.tslint\": \"(autodetect)\",\n    \"nodejs_package_manager_path\": \"npm\",\n    \"ts.external.directory.path\": \"/home/sana/Projects/test10/api/node_modules/typescript/lib\",\n    \"vue.rearranger.settings.migration\": \"true\"\n  }\n}]]></component>\n  <component name=\"RecentsManager\">\n    <key name=\"CopyFile.RECENT_KEYS\">\n      <recent name=\"$PROJECT_DIR$/frontend/src/assets\" />\n      <recent name=\"$PROJECT_DIR$/api\" />\n      <recent name=\"$PROJECT_DIR$/api/routers\" />\n      <recent name=\"$PROJECT_DIR$\" />\n      <recent name=\"$PROJECT_DIR$/frontend/src/components\" />\n    </key>\n    <key name=\"MoveFile.RECENT_KEYS\">\n      <recent name=\"$PROJECT_DIR$/api\" />\n      <recent name=\"$PROJECT_DIR$/frontend/src/components\" />\n      <recent name=\"$PROJECT_DIR$\" />\n    </key>\n  </component>\n  <component name=\"SpellCheckerSettings\" RuntimeDictionaries=\"0\" Folders=\"0\" CustomDictionaries=\"0\" DefaultDictionary=\"application-level\" UseSingleDictionary=\"true\" transferred=\"true\" />\n  <component name=\"TaskManager\">\n    <task active=\"true\" id=\"Default\" summary=\"Default task\">\n      <changelist id=\"d4ee1f38-0934-4f46-8bc3-0e4323239dfd\" name=\"Changes\" comment=\"\" />\n      <created>1706942082547</created>\n      <option name=\"number\" value=\"Default\" />\n      <option name=\"presentableId\" value=\"Default\" />\n      <updated>1706942082547</updated>\n      <workItem from=\"1706942083582\" duration=\"61000\" />\n      <workItem from=\"1706946776668\" duration=\"2856000\" />\n      <workItem from=\"1706949634618\" duration=\"6415000\" />\n      <workItem from=\"1706956056407\" duration=\"11437000\" />\n    </task>\n    <task id=\"LOCAL-00001\" summary=\"Create Redux async thunks and Slice for fetching, creating, deleting for posts.\">\n      <option name=\"closed\" value=\"true\" />\n      <created>1706948487032</created>\n      <option name=\"number\" value=\"00001\" />\n      <option name=\"presentableId\" value=\"LOCAL-00001\" />\n      <option name=\"project\" value=\"LOCAL\" />\n      <updated>1706948487032</updated>\n    </task>\n    <task id=\"LOCAL-00002\" summary=\"Add containers: Home.tsx, NewPost.tsx.\">\n      <option name=\"closed\" value=\"true\" />\n      <created>1706953448358</created>\n      <option name=\"number\" value=\"00002\" />\n      <option name=\"presentableId\" value=\"LOCAL-00002\" />\n      <option name=\"project\" value=\"LOCAL\" />\n      <updated>1706953448358</updated>\n    </task>\n    <task id=\"LOCAL-00003\" summary=\"Add containers: Home.tsx, NewPost.tsx.\">\n      <option name=\"closed\" value=\"true\" />\n      <created>1706956096897</created>\n      <option name=\"number\" value=\"00003\" />\n      <option name=\"presentableId\" value=\"LOCAL-00003\" />\n      <option name=\"project\" value=\"LOCAL\" />\n      <updated>1706956096897</updated>\n    </task>\n    <option name=\"localTasksCounter\" value=\"4\" />\n    <servers />\n  </component>\n  <component name=\"TypeScriptGeneratedFilesManager\">\n    <option name=\"version\" value=\"3\" />\n  </component>\n  <component name=\"Vcs.Log.Tabs.Properties\">\n    <option name=\"TAB_STATES\">\n      <map>\n        <entry key=\"MAIN\">\n          <value>\n            <State>\n              <option name=\"FILTERS\">\n                <map>\n                  <entry key=\"branch\">\n                    <value>\n                      <list>\n                        <option value=\"origin/main\" />\n                      </list>\n                    </value>\n                  </entry>\n                </map>\n              </option>\n            </State>\n          </value>\n        </entry>\n      </map>\n    </option>\n  </component>\n  <component name=\"VcsManagerConfiguration\">\n    <MESSAGE value=\"Create Redux async thunks and Slice for fetching, creating, deleting for posts.\" />\n    <MESSAGE value=\"Add containers: Home.tsx, NewPost.tsx.\" />\n    <MESSAGE value=\"add SinglePost.tsx\" />\n    <option name=\"LAST_COMMIT_MESSAGE\" value=\"add SinglePost.tsx\" />\n  </component>\n  <component name=\"XDebuggerManager\">\n    <breakpoint-manager>\n      <breakpoints>\n        <line-breakpoint enabled=\"true\" type=\"javascript\">\n          <url>file://$PROJECT_DIR$/frontend/src/store/posts/postsThunks.ts</url>\n          <line>5</line>\n          <option name=\"timeStamp\" value=\"1\" />\n        </line-breakpoint>\n        <line-breakpoint enabled=\"true\" type=\"javascript\">\n          <url>file://$PROJECT_DIR$/frontend/src/store/posts/postsThunks.ts</url>\n          <line>39</line>\n          <option name=\"timeStamp\" value=\"2\" />\n        </line-breakpoint>\n      </breakpoints>\n    </breakpoint-manager>\n  </component>\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/workspace.xml b/.idea/workspace.xml
+--- a/.idea/workspace.xml	(revision c9a14557d94296d32620f769bce58cd57eeb1631)
++++ b/.idea/workspace.xml	(date 1706967928472)
+@@ -4,32 +4,23 @@
+     <option name="autoReloadType" value="SELECTIVE" />
+   </component>
+   <component name="ChangeListManager">
+-    <list default="true" id="d4ee1f38-0934-4f46-8bc3-0e4323239dfd" name="Changes" comment="add SinglePost.tsx">
+-      <change afterPath="$PROJECT_DIR$/.editorconfig" afterDir="false" />
+-      <change afterPath="$PROJECT_DIR$/api/config.ts" afterDir="false" />
+-      <change afterPath="$PROJECT_DIR$/api/db.json" afterDir="false" />
+-      <change afterPath="$PROJECT_DIR$/api/fileDb.ts" afterDir="false" />
+-      <change afterPath="$PROJECT_DIR$/api/index.ts" afterDir="false" />
+-      <change afterPath="$PROJECT_DIR$/api/multer.ts" afterDir="false" />
+-      <change afterPath="$PROJECT_DIR$/api/nodemon.json" afterDir="false" />
+-      <change afterPath="$PROJECT_DIR$/api/public/images/43207dae-276a-41d6-b20e-465b9f755e95.jpeg" afterDir="false" />
+-      <change afterPath="$PROJECT_DIR$/api/public/images/7c527904-385a-4526-b5f5-c0b2925a9b79.jpeg" afterDir="false" />
+-      <change afterPath="$PROJECT_DIR$/api/routers/posts.ts" afterDir="false" />
+-      <change afterPath="$PROJECT_DIR$/api/tsconfig.json" afterDir="false" />
+-      <change afterPath="$PROJECT_DIR$/api/types.d.ts" afterDir="false" />
+-      <change afterPath="$PROJECT_DIR$/frontend/src/assets/images/no-image-available.png" afterDir="false" />
+-      <change afterPath="$PROJECT_DIR$/frontend/src/containers/SinglePost/SinglePost.tsx" afterDir="false" />
++    <list default="true" id="d4ee1f38-0934-4f46-8bc3-0e4323239dfd" name="Changes" comment="Create Redux async thunks and Slice for fetching, creating, deleting for posts.">
++      <change afterPath="$PROJECT_DIR$/frontend/src/axiosApi.ts" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/frontend/src/components/AppToolbar/AppToolbar.tsx" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/frontend/src/components/FileInput/FileInput.tsx" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/frontend/src/components/Layout/Layout.tsx" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/frontend/src/components/PostForm/PostForm.tsx" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/frontend/src/components/PostItem/PosItem.tsx" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/frontend/src/constants.ts" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/frontend/src/containers/Home/Home.tsx" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/frontend/src/containers/NewPost/NewPost.tsx" afterDir="false" />
+       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/api/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/api/.gitignore" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/api/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/api/package-lock.json" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/api/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/api/package.json" afterDir="false" />
+       <change beforePath="$PROJECT_DIR$/frontend/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/package-lock.json" afterDir="false" />
+       <change beforePath="$PROJECT_DIR$/frontend/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/package.json" afterDir="false" />
+       <change beforePath="$PROJECT_DIR$/frontend/src/App.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/App.tsx" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/frontend/src/components/PostForm/PostForm.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/PostForm/PostForm.tsx" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/frontend/src/components/PostItem/PosItem.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/PostItem/PosItem.tsx" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/frontend/src/containers/Home/Home.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/containers/Home/Home.tsx" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/frontend/src/types.d.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/types.d.ts" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/frontend/src/components/axiosApi.ts" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/frontend/src/main.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/main.tsx" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/frontend/src/store/posts/postsThunks.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/store/posts/postsThunks.ts" afterDir="false" />
+     </list>
+     <option name="SHOW_DIALOG" value="false" />
+     <option name="HIGHLIGHT_CONFLICTS" value="true" />
+@@ -56,7 +47,7 @@
+     "RunOnceActivity.ShowReadmeOnStart": "true",
+     "WebServerToolWindowFactoryState": "false",
+     "git-widget-placeholder": "main",
+-    "last_opened_file_path": "/home/sana/Projects/React/test9",
++    "last_opened_file_path": "/home/sana/Projects/test10/frontend/src/components",
+     "node.js.detected.package.eslint": "true",
+     "node.js.detected.package.tslint": "true",
+     "node.js.selected.package.eslint": "(autodetect)",
+@@ -68,14 +59,10 @@
+ }]]></component>
+   <component name="RecentsManager">
+     <key name="CopyFile.RECENT_KEYS">
+-      <recent name="$PROJECT_DIR$/frontend/src/assets" />
+-      <recent name="$PROJECT_DIR$/api" />
+-      <recent name="$PROJECT_DIR$/api/routers" />
+-      <recent name="$PROJECT_DIR$" />
+       <recent name="$PROJECT_DIR$/frontend/src/components" />
++      <recent name="$PROJECT_DIR$/frontend/src" />
+     </key>
+     <key name="MoveFile.RECENT_KEYS">
+-      <recent name="$PROJECT_DIR$/api" />
+       <recent name="$PROJECT_DIR$/frontend/src/components" />
+       <recent name="$PROJECT_DIR$" />
+     </key>
+@@ -90,8 +77,7 @@
+       <updated>1706942082547</updated>
+       <workItem from="1706942083582" duration="61000" />
+       <workItem from="1706946776668" duration="2856000" />
+-      <workItem from="1706949634618" duration="6415000" />
+-      <workItem from="1706956056407" duration="11437000" />
++      <workItem from="1706949634618" duration="3544000" />
+     </task>
+     <task id="LOCAL-00001" summary="Create Redux async thunks and Slice for fetching, creating, deleting for posts.">
+       <option name="closed" value="true" />
+@@ -101,56 +87,15 @@
+       <option name="project" value="LOCAL" />
+       <updated>1706948487032</updated>
+     </task>
+-    <task id="LOCAL-00002" summary="Add containers: Home.tsx, NewPost.tsx.">
+-      <option name="closed" value="true" />
+-      <created>1706953448358</created>
+-      <option name="number" value="00002" />
+-      <option name="presentableId" value="LOCAL-00002" />
+-      <option name="project" value="LOCAL" />
+-      <updated>1706953448358</updated>
+-    </task>
+-    <task id="LOCAL-00003" summary="Add containers: Home.tsx, NewPost.tsx.">
+-      <option name="closed" value="true" />
+-      <created>1706956096897</created>
+-      <option name="number" value="00003" />
+-      <option name="presentableId" value="LOCAL-00003" />
+-      <option name="project" value="LOCAL" />
+-      <updated>1706956096897</updated>
+-    </task>
+-    <option name="localTasksCounter" value="4" />
++    <option name="localTasksCounter" value="2" />
+     <servers />
+   </component>
+   <component name="TypeScriptGeneratedFilesManager">
+     <option name="version" value="3" />
+-  </component>
+-  <component name="Vcs.Log.Tabs.Properties">
+-    <option name="TAB_STATES">
+-      <map>
+-        <entry key="MAIN">
+-          <value>
+-            <State>
+-              <option name="FILTERS">
+-                <map>
+-                  <entry key="branch">
+-                    <value>
+-                      <list>
+-                        <option value="origin/main" />
+-                      </list>
+-                    </value>
+-                  </entry>
+-                </map>
+-              </option>
+-            </State>
+-          </value>
+-        </entry>
+-      </map>
+-    </option>
+   </component>
+   <component name="VcsManagerConfiguration">
+     <MESSAGE value="Create Redux async thunks and Slice for fetching, creating, deleting for posts." />
+-    <MESSAGE value="Add containers: Home.tsx, NewPost.tsx." />
+-    <MESSAGE value="add SinglePost.tsx" />
+-    <option name="LAST_COMMIT_MESSAGE" value="add SinglePost.tsx" />
++    <option name="LAST_COMMIT_MESSAGE" value="Create Redux async thunks and Slice for fetching, creating, deleting for posts." />
+   </component>
+   <component name="XDebuggerManager">
+     <breakpoint-manager>

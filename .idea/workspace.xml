@@ -4,32 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d4ee1f38-0934-4f46-8bc3-0e4323239dfd" name="Changes" comment="add SinglePost.tsx">
-      <change afterPath="$PROJECT_DIR$/.editorconfig" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api/config.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api/db.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api/fileDb.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api/index.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api/multer.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api/nodemon.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api/public/images/43207dae-276a-41d6-b20e-465b9f755e95.jpeg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api/public/images/7c527904-385a-4526-b5f5-c0b2925a9b79.jpeg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api/routers/posts.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api/tsconfig.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api/types.d.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/src/assets/images/no-image-available.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/src/containers/SinglePost/SinglePost.tsx" afterDir="false" />
+    <list default="true" id="d4ee1f38-0934-4f46-8bc3-0e4323239dfd" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/api/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/api/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/api/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/App.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/App.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/components/PostForm/PostForm.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/PostForm/PostForm.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/components/PostItem/PosItem.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/PostItem/PosItem.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/containers/Home/Home.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/containers/Home/Home.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/types.d.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/types.d.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -38,6 +14,7 @@
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="UPDATE_TYPE" value="REBASE" />
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
@@ -56,7 +33,7 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "WebServerToolWindowFactoryState": "false",
     "git-widget-placeholder": "main",
-    "last_opened_file_path": "/home/sana/Projects/React/test9",
+    "last_opened_file_path": "/home/sana/Projects/test10",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
