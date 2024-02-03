@@ -29,4 +29,33 @@ postsRouter.post('/', imagesUpload.single('image'), async (req, res) => {
   res.send(newPost);
 });
 
+postsRouter.get('/:id', async (req, res) => {
+  const postId = req.params.id;
+
+  try {
+    const post = await fileDb.getItemById(postId);
+
+    if (post) {
+      res.send(post);
+    } else {
+      res.status(404).send('Post not found');
+    }
+  } catch (error) {
+    console.error('Error fetching post:', error);
+    res.status(500).send('Internal Server Error');
+  }
+});
+
+postsRouter.delete('/:id', async (req, res) => {
+  const postId = req.params.id;
+
+  try {
+    await fileDb.deleteItem(postId);
+    res.status(204).send();
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('Error deleting post');
+  }
+});
+
 export default postsRouter;

@@ -52,14 +52,16 @@ const PostItem: React.FC<Props> = ({id, title, content, image, dateTime}) => {
           </strong>
           <p>{formattedDateTime}</p>
         </CardContent>
-        <CardActions>
-          <IconButton component={Link} to={`/posts/${id}`}>
-            <ArrowForwardIcon />
-          </IconButton>
-          <IconButton onClick={() => post && dispatch(deletePost(post.id))}>
-            <DeleteIcon />
-          </IconButton>
-        </CardActions>
+        <Grid container justifyContent="flex-end">
+          <CardActions>
+            <IconButton component={Link} to={`/posts/${id}`}>
+              <ArrowForwardIcon />
+            </IconButton>
+            <IconButton onClick={() => post && dispatch(deletePost(post.id))}>
+              <DeleteIcon />
+            </IconButton>
+          </CardActions>
+        </Grid>
       </Card>
     </Grid>
   );
